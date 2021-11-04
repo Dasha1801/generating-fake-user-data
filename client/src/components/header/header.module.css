@@ -1,0 +1,12 @@
+.header {
+  margin: 3% 0 1%;
+}
+
+.settings {
+  display: flex;
+  justify-content: end;
+}
+
+.btnSubmit {
+  width: 40%;
+}
