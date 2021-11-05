@@ -22,7 +22,7 @@ const Header = () => {
   // };
 
   const getUsers = () => {
-    Axios.get("http://localhost:3001/").then((res) => {
+    Axios.get("http://localhost:3001/ua").then((res) => {
       dispatch(fillDb(res.data));
     });
   };
@@ -32,7 +32,7 @@ const Header = () => {
       <Row className={styles.settings}>
         <Col xs={2}>
           <Form.Select aria-label="Floating label select example">
-            <option>Choose region</option>
+            <option>Region</option>
             <option value="1">USA</option>
             <option value="2">RUS</option>
             <option value="3">UA</option>
@@ -40,7 +40,10 @@ const Header = () => {
         </Col>
         <Col xs={3}>
           <InputGroup className="mb-3">
-            <Form.Select aria-label="Floating label select example">
+            <Form.Select
+              aria-label="Floating label select example"
+              className={styles.optionError}
+            >
               <option>Error rate</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -57,8 +60,8 @@ const Header = () => {
           </InputGroup>
         </Col>
         {/* <Button variant="secondary" onClick={addUsers}>
-            Submit
-          </Button> */}
+          Submit
+        </Button> */}
         <Col xs={3}>
           <InputGroup className="mb-3">
             <FormControl placeholder="Page" />

@@ -20,7 +20,7 @@ app.post("/", (rej, res) => {
   const id = rej.body.id;
 
   db.query(
-    "INSERT INTO users (name, address, tel, id) VALUES (?,?,?,?)",
+    "INSERT INTO users_ua (name, address, tel, id) VALUES (?,?,?,?)",
     [name, address, tel, id],
     (err, result) => {
       if (err) {
@@ -32,8 +32,28 @@ app.post("/", (rej, res) => {
   );
 });
 
-app.get("/", (req, res) => {
+app.get("/usa", (req, res) => {
   db.query("SELECT * FROM users", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/ru", (req, res) => {
+  db.query("SELECT * FROM users_ru", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/ua", (req, res) => {
+  db.query("SELECT * FROM users_ua", (err, result) => {
     if (err) {
       console.log(err);
     } else {

@@ -4,9 +4,15 @@
 
 .settings {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .btnSubmit {
   width: 40%;
+}
+
+@media (max-width: 640px) {
+  .optionError {
+    width: 30%;
+  }
 }

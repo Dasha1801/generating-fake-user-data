@@ -1,14 +1,13 @@
-import { Container } from "react-bootstrap";
 import Header from '../header/header';
 import TableUsers from '../table/table';
-import "./app.module.css";
+import styles from "./app.module.css";
 
 function App() {
   return (
-    <Container>
+    <div className={styles.container}>
       <Header />
       <TableUsers/>
-    </Container>
+    </div>
   );
 }
 
