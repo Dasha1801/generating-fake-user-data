@@ -18,7 +18,6 @@ import {
 } from "../../redux/action";
 import { useState } from "react";
 
-
 const Header = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -57,9 +56,11 @@ const Header = () => {
   };
 
   function getData() {
-    Axios.get(`http://localhost:3001/${region}`).then((res) => {
-      dispatch(fillDb(res.data));
-    });
+    Axios.get(`https://arcane-wave-78778.herokuapp.com/${region}`).then(
+      (res) => {
+        dispatch(fillDb(res.data));
+      }
+    );
   }
 
   const handlerSubmit = () => {
