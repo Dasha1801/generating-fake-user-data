@@ -7,10 +7,10 @@ app.use(cors());
 app.use(express.json());
 
 const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "saimon1506",
-  database: "faker_users",
+  user: "b5adcc5cb9c065",
+  host: "eu-cdbr-west-01.cleardb.com",
+  password: "d2a0bb74",
+  database: "heroku_1c4d5625035b043",
 });
 
 app.post("/", (rej, res) => {
@@ -33,7 +33,7 @@ app.post("/", (rej, res) => {
 });
 
 app.get("/usa", (req, res) => {
-  db.query("SELECT * FROM users", (err, result) => {
+  db.query("SELECT * FROM users_usa", (err, result) => {
     if (err) {
       console.log(err);
     } else {

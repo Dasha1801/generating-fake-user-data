@@ -15,6 +15,7 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-scripts": "4.0.3",
+    "seedrandom": "^3.0.5",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -40,8 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-   
   }
 }

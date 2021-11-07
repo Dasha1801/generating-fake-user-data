@@ -9,33 +9,79 @@ import {
 import styles from "./header.module.css";
 import Axios from "axios";
 import { useDispatch } from "react-redux";
-import { fillDb } from "../../redux/action";
-// import { createUser } from "../../utils/utils";
+import {
+  applySeed,
+  choosePage,
+  chooseRegion,
+  fillDb,
+  getErrorValue,
+} from "../../redux/action";
+import { useState } from "react";
+
 
 const Header = () => {
   const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  const [region, setRegion] = useState("usa");
+  const [errorOption, setErrorOption] = useState(0);
+  const [errorEnter, setErrorEnter] = useState(0);
+  const [seed, setSeed] = useState(0);
 
-  // const addUsers = () => {
-  //   Axios.post("http://localhost:3001/", createUser()).then(() => {
-  //     console.log("Success");
-  //   });
-  // };
+  const getRegion = (e) => {
+    const { value } = e.target;
+    setRegion(value);
+  };
 
-  const getUsers = () => {
-    Axios.get("http://localhost:3001/ua").then((res) => {
+  const getNumberPage = (e) => {
+    const { value } = e.target;
+    setPage(+value);
+  };
+
+  const getErrorOption = (e) => {
+    const { value } = e.target;
+    setErrorOption(+value);
+    setErrorEnter(0);
+    document.getElementById("enter").value = "";
+  };
+
+  const getErrorEnter = (e) => {
+    const { value } = e.target;
+    setErrorEnter(+value);
+    setErrorOption(0);
+    document.getElementById("option").value = "Error rate";
+  };
+
+  const getSeed = (e) => {
+    const { value } = e.target;
+    setSeed(+value);
+  };
+
+  function getData() {
+    Axios.get(`http://localhost:3001/${region}`).then((res) => {
       dispatch(fillDb(res.data));
     });
+  }
+
+  const handlerSubmit = () => {
+    dispatch(choosePage(page));
+    dispatch(chooseRegion(region));
+    dispatch(getErrorValue(errorOption || errorEnter));
+    dispatch(applySeed(seed));
+    getData();
   };
 
   return (
     <Form className={styles.header}>
       <Row className={styles.settings}>
         <Col xs={2}>
-          <Form.Select aria-label="Floating label select example">
+          <Form.Select
+            aria-label="Floating label select example"
+            onClick={getRegion}
+          >
             <option>Region</option>
-            <option value="1">USA</option>
-            <option value="2">RUS</option>
-            <option value="3">UA</option>
+            <option value="usa">USA</option>
+            <option value="ru">RUS</option>
+            <option value="ua">UA</option>
           </Form.Select>
         </Col>
         <Col xs={3}>
@@ -43,6 +89,8 @@ const Header = () => {
             <Form.Select
               aria-label="Floating label select example"
               className={styles.optionError}
+              onChange={getErrorOption}
+              id="option"
             >
               <option>Error rate</option>
               <option value="1">1</option>
@@ -56,22 +104,37 @@ const Header = () => {
               <option value="9">9</option>
               <option value="10">10</option>
             </Form.Select>
-            <FormControl placeholder="Enter" />
+            <FormControl
+              placeholder="Enter"
+              min="1"
+              max="1000"
+              type="number"
+              onChange={getErrorEnter}
+              id="enter"
+            />
           </InputGroup>
         </Col>
-        {/* <Button variant="secondary" onClick={addUsers}>
-          Submit
-        </Button> */}
         <Col xs={3}>
           <InputGroup className="mb-3">
-            <FormControl placeholder="Page" />
-            <FormControl placeholder="Seed" />
+            <FormControl
+              placeholder="Page"
+              type="number"
+              onChange={getNumberPage}
+              min="1"
+              max="15"
+            />
+            <FormControl
+              placeholder="Seed"
+              type="number"
+              onChange={getSeed}
+              min="0"
+            />
             <Button
               variant="secondary"
-              onClick={getUsers}
+              onClick={handlerSubmit}
               className={styles.btnSubmit}
             >
-              Submit
+              Random
             </Button>
           </InputGroup>
         </Col>

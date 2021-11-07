@@ -1,11 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import Data from "./data/data";
+import { getSeed } from "../../utils/seed";
 
 const TableUsers = () => {
-  const dbEn = useSelector(({ dbEn }) => dbEn);
+  const db = useSelector(({ db }) => db);
+  const errorRate = useSelector(({errorRate}) => errorRate);
+  const region = useSelector(({region}) => region);
+  const seed = useSelector(({ seed }) => seed);
+  const numberPage = useSelector(({ numberPage }) => numberPage);
+  const startPage = (numberPage - 1) * 20;
   const [countRow, setCountRow] = useState(20);
+  const [name, address, tel, id] = getSeed(
+    seed,
+    db,
+    startPage,
+    countRow,
+    errorRate,
+    region
+  );
 
   const scrollHandler = useCallback(
     (e) => {
@@ -39,9 +52,17 @@ const TableUsers = () => {
         </tr>
       </thead>
       <tbody>
-        {dbEn.length
-          ? dbEn.slice(0, countRow).map((user) => {
-              return <Data user={user} key={user.number} />;
+        {db.length
+          ? db.slice(startPage, startPage + countRow).map((user, idx) => {
+              return (
+                <tr key={idx}>
+                  <td>{startPage+idx+1}</td>
+                  <td>{name[idx]}</td>
+                  <td>{address[idx]}</td>
+                  <td>{tel[idx]}</td>
+                  <td>{id[idx]}</td>
+                </tr>
+              );
             })
           : null}
       </tbody>
